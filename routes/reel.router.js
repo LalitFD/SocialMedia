@@ -1,24 +1,33 @@
 import express from "express";
+import multer from "multer";
+
 import {
     getAllReels,
     getReelById,
     viewReel,
     createReel,
     deleteReel,
-    getReelsByUser
+    getReelsByUser,
+    fetchAndSaveReels
 } from "../controller/reelController.js";
+import { auth } from "../mideleware/auth.js";
+const upload = multer({ dest: "public/reel" });
 
-import { auth } from "../middleware/auth.js";
+auth
 
 const rrouter = express.Router();
 
 rrouter.get("/reels", getAllReels);
 
+rrouter.post("/fetch-pexels", fetchAndSaveReels);
+
+
+
 rrouter.get("/reels/:id", getReelById);
 
 rrouter.patch("/reels/:id/view", viewReel);
 
-rrouter.post("/reels", auth, createReel);
+rrouter.post("/reels", auth, upload.single("videoUrl"), createReel);
 
 rrouter.delete("/reels/:id", auth, deleteReel);
 

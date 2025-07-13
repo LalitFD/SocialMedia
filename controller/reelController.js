@@ -1,17 +1,62 @@
 import { Reel } from "../models/Reel.js";
+import axios from "axios";
+import dotenv from "dotenv";
+
+
+
+
+export const fetchAndSaveReels = async (req, res) => {
+  try {
+    const { userId } = req.body;
+
+    const { data } = await axios.get("https://api.pexels.com/videos/search", {
+      headers: {
+        Authorization: process.env.PEXELS_API_KEY,
+      },
+      params: {
+        query: "trending",
+        orientation: "portrait",
+      },
+    });
+
+    const savedReels = await Promise.all(
+      data.videos.map(async (video) => {
+        const videoFile = video.video_files[0];
+
+        const newReel = new Reel({
+          title: `Video by ${video.user.name}`,
+          description: `Duration: ${video.duration}s`,
+          videoUrl: videoFile.link,
+          createdBy: userId,
+        });
+
+        return await newReel.save();
+      })
+    );
+
+    res.status(201).json({
+      message: `${savedReels.length} reels created`,
+      reels: savedReels,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
 
 // Get all reels
 export const getAllReels = async (req, res) => {
-    try {
-        const reels = await Reel.find()
-            .populate("createdBy", "name email")
-            .sort({ createdAt: -1 });
+  try {
+    const reels = await Reel.find()
+      .populate("createdBy", "name email")
+      .sort({ createdAt: -1 });
 
-        res.status(200).json(reels);
-    } catch (err) {
-        console.log(err);
-        res.status(500).json({ error: "Internal server error" });
-    }
+    res.status(200).json(reels);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: "Internal server error" });
+  }
 };
 
 
