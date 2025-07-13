@@ -16,7 +16,7 @@ export const getAllMyPosts = async (request, response, next) => {
         });
 
     } catch (err) {
-        console.error("Error fetching posts:", err);
+        console.error(err);
         return response.status(500).json({ error: "Internal server error" });
     }
 };

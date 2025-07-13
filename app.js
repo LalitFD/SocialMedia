@@ -7,6 +7,7 @@ import cookieParser from "cookie-parser";
 import router from "./routes/user.router.js";
 import { Prouter } from "./routes/post.router.js";
 import Srouter from "./routes/story.router.js";
+import rrouter from "./routes/reel.router.js";
 
 const app = express();
 
@@ -19,7 +20,8 @@ mongoose.connect(process.env.URL).then((result) => {
 
     app.use("/", router);
     app.use("/api", Prouter)
-    app.use("/story",Srouter)
+    app.use("/story", Srouter)
+    app.use("/reel", rrouter)
 
     app.listen(3000, () => {
         console.log("server started")

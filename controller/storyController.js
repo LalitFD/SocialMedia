@@ -35,13 +35,18 @@ export const getStoryById = async (req, res) => {
 export const createStory = async (req, res) => {
     try {
         const { type, duration } = req.body;
-        const fileType = req.file.mimetype.split("/")[0];
+
+        if (!req.file) {
+            return res.status(400).json({ error: "No file uploaded" });
+        }
+
+        const filePath = `/uploads/${req.file.filename}`; // Adjust path as needed
 
         const story = new Story({
             author: req.user._id,
             media: {
                 type,
-                url: fileType,
+                url: filePath,
                 duration: duration || 15
             }
         });
@@ -54,6 +59,7 @@ export const createStory = async (req, res) => {
         res.status(500).json({ error: "Internal server error" });
     }
 };
+
 
 // DELETE story
 export const deleteStory = async (req, res) => {
