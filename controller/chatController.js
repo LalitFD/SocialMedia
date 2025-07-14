@@ -23,6 +23,7 @@ export const createConversation = async (req, res) => {
     }
 };
 
+
 // Get all conversations of a user
 export const getConversations = async (req, res) => {
     try {

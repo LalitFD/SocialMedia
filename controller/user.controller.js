@@ -82,11 +82,11 @@ export const generateToken = (user) => {
     const payload = {
         _id: user._id,
         email: user.email,
-        name: user.name,              
-        username: user.username        
+        name: user.name,
+        username: user.username
     };
 
-    const token = jwt.sign(payload, process.env.secure_key, { expiresIn: "1h" }); 
+    const token = jwt.sign(payload, process.env.secure_key, { expiresIn: "1h" });
     console.log("Generated Token:", token);
 
     return token;

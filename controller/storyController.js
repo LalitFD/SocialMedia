@@ -40,7 +40,7 @@ export const createStory = async (req, res) => {
             return res.status(400).json({ error: "No file uploaded" });
         }
 
-        const filePath = `/uploads/${req.file.filename}`; // Adjust path as needed
+        const filePath = `/uploads/${req.file.filename}`; 
 
         const story = new Story({
             author: req.user._id,
