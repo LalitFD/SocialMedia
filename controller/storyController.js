@@ -1,7 +1,7 @@
 import { Story } from "../models/Story.js";
 
 
-// GET all stories (not expired)
+// GET all stories 
 export const getAllStories = async (req, res) => {
     try {
         const stories = await Story.find({
@@ -40,7 +40,7 @@ export const createStory = async (req, res) => {
             return res.status(400).json({ error: "No file uploaded" });
         }
 
-        const filePath = `/uploads/${req.file.filename}`; 
+        const filePath = `/uploads/${req.file.filename}`;
 
         const story = new Story({
             author: req.user._id,
@@ -66,10 +66,6 @@ export const deleteStory = async (req, res) => {
     try {
         const story = await Story.findById(req.params.id);
         if (!story) return res.status(404).json({ error: "Story not found" });
-
-        if (story.author.toString() !== req.user._id.toString()) {
-            return res.status(403).json({ error: "Unauthorized" });
-        }
 
         await story.deleteOne();
         res.status(200).json({ message: "Story deleted" });

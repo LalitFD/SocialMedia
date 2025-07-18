@@ -3,8 +3,6 @@ import axios from "axios";
 import dotenv from "dotenv";
 
 
-
-
 export const fetchAndSaveReels = async (req, res) => {
   try {
     const { userId } = req.body;
@@ -15,17 +13,16 @@ export const fetchAndSaveReels = async (req, res) => {
       },
       params: {
         query: "trending",
-        orientation: "portrait",
       },
     });
 
     const savedReels = await Promise.all(
       data.videos.map(async (video) => {
-        const videoFile = video.video_files[0];
+        const videoFile = video.video_files.find(f => f.quality === "hd") || video.video_files[0];
 
         const newReel = new Reel({
-          title: `Video by ${video.user.name}`,
-          description: `Duration: ${video.duration}s`,
+          title: video.user.name,
+          description: `${video.duration}s video`,
           videoUrl: videoFile.link,
           createdBy: userId,
         });
@@ -35,7 +32,6 @@ export const fetchAndSaveReels = async (req, res) => {
     );
 
     res.status(201).json({
-      message: `${savedReels.length} reels created`,
       reels: savedReels,
     });
   } catch (err) {
@@ -68,29 +64,6 @@ export const getReelById = async (req, res) => {
     if (!reel) {
       return res.status(404).json({ error: "Reel not found" });
     }
-
-    res.status(200).json(reel);
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({ error: "Internal server error" });
-  }
-};
-
-
-
-// Mark reel as viewed
-export const viewReel = async (req, res) => {
-  try {
-    const reel = await Reel.findByIdAndUpdate(
-      req.params.id,
-      { $inc: { views: 1 } },
-      { new: true }
-    ).populate("createdBy", "name email");
-
-    if (!reel) {
-      return res.status(404).json({ error: "Reel not found" });
-    }
-
     res.status(200).json(reel);
   } catch (err) {
     console.log(err);

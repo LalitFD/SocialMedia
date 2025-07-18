@@ -4,7 +4,6 @@ import multer from "multer";
 import {
     getAllReels,
     getReelById,
-    viewReel,
     createReel,
     deleteReel,
     getReelsByUser,
@@ -24,8 +23,6 @@ rrouter.post("/fetch-pexels", fetchAndSaveReels);
 
 
 rrouter.get("/reels/:id", getReelById);
-
-rrouter.patch("/reels/:id/view", viewReel);
 
 rrouter.post("/reels", auth, upload.single("videoUrl"), createReel);
 
