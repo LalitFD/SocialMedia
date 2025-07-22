@@ -1,3 +1,4 @@
+import Sidebar from "../Sidebar/Sidebar";
 import "./Profile.css";
 import { useNavigate } from "react-router-dom";
 function Profile() {
@@ -7,58 +8,11 @@ function Profile() {
         nevigate("/profile");
     }
     return <>
-        <div className="container">
-            <div className="sidebar">
-                <div className="logo">Social</div>
-
-                <div className="nav-item active">
-                    <span className="nav-icon">🏠</span>
-                    <span className="nav-text">Home</span>
-                </div>
-
-                <div className="nav-item">
-                    <span className="nav-icon">🔍</span>
-                    <span className="nav-text">Search</span>
-                </div>
-
-                <div className="nav-item">
-                    <span className="nav-icon">🧭</span>
-                    <span className="nav-text">Explore</span>
-                </div>
-
-                <div className="nav-item">
-                    <span className="nav-icon">🎬</span>
-                    <span className="nav-text">Reels</span>
-                </div>
-
-                <div className="nav-item">
-                    <span className="nav-icon">💬</span>
-                    <span className="nav-text">Messages</span>
-                </div>
-
-                <div className="nav-item">
-                    <span className="nav-icon">🔔</span>
-                    <span className="nav-text">Notifications</span>
-                </div>
-
-                <div className="nav-item">
-                    <span className="nav-icon">➕</span>
-                    <span className="nav-text">Create</span>
-                </div>
-
-                <div className="nav-item">
-                    <span className="nav-icon">⋯</span>
-                    <span className="nav-text">More</span>
-                </div>
-
-                <div className="nav-item">
-                    <span className="nav-icon">👤</span>
-                    <span className="nav-text" onClick={handleLogin}>Profile</span>
-                </div>
-            </div>
+        <div className="container" style={{ marginLeft: "-2px" }}>
+            <Sidebar />
 
             <div className="main-content">
-                <div className="profile-header">
+                <div className="profile-header" style={{ height: "250px" }}>
                     <div className="profile-title">Profile</div>
 
                     <div className="profile-info">
@@ -95,17 +49,44 @@ function Profile() {
                     </div>
                 </div>
 
-                <div className="posts-grid">
-                    <div className="post-item"></div>
-                    <div className="post-item"></div>
-                    <div className="post-item selected"></div>
-                    <div className="post-item"></div>
-                    <div className="post-item"></div>
-                    <div className="post-item"></div>
-                    <div className="post-item"></div>
-                    <div className="post-item"></div>
+                <div className="Posts-header" style={{ height: "250px" }}>
+                    <div className="AllPost">
+                        <div className="post">
+                            <img src="https://images.pexels.com/photos/414612/pexels-photo-414612.jpeg?cs=srgb&dl=pexels-souvenirpixels-414612.jpg&fm=jpg" alt="" style={{ background: "cover" }} />
+                        </div>
+
+                        <div className="post">
+                            <img src="https://images.pexels.com/photos/414612/pexels-photo-414612.jpeg?cs=srgb&dl=pexels-souvenirpixels-414612.jpg&fm=jpg" alt="" style={{ background: "cover" }} />
+                        </div>
+
+                        <div className="post">
+                            <img src="https://images.pexels.com/photos/414612/pexels-photo-414612.jpeg?cs=srgb&dl=pexels-souvenirpixels-414612.jpg&fm=jpg" alt="" style={{ background: "cover" }} />
+                        </div>
+
+                    </div>
+                    <div className="AllPost">
+
+                        <div className="post">
+                            <img src="https://images.pexels.com/photos/414612/pexels-photo-414612.jpeg?cs=srgb&dl=pexels-souvenirpixels-414612.jpg&fm=jpg" alt="" style={{ background: "cover" }} />
+                        </div>
+
+                        <div className="post">
+                            <img src="https://images.pexels.com/photos/414612/pexels-photo-414612.jpeg?cs=srgb&dl=pexels-souvenirpixels-414612.jpg&fm=jpg" alt="" style={{ background: "cover" }} />
+                        </div>
+
+                        <div className="post">
+                            <img src="https://images.pexels.com/photos/414612/pexels-photo-414612.jpeg?cs=srgb&dl=pexels-souvenirpixels-414612.jpg&fm=jpg" alt="" style={{ background: "cover" }} />
+                        </div>
+
+                    </div>
                 </div>
+
+
             </div>
+
+
+
+
         </div>
     </>
 }
