@@ -7,11 +7,12 @@ function Profile() {
     const handleLogin = () => {
         nevigate("/profile");
     }
+
     return <>
         <div className="container" style={{ marginLeft: "-2px" }}>
             <Sidebar />
 
-            <div className="main-content">
+            <div className="main-content" >
                 <div className="profile-header" style={{ height: "250px" }}>
                     <div className="profile-title">Profile</div>
 
@@ -50,7 +51,7 @@ function Profile() {
                 </div>
 
                 <div className="Posts-header" style={{ height: "250px" }}>
-                    <div className="AllPost">
+                    <div className="AllPost" style={{ marginBottom: "20px" }}>
                         <div className="post">
                             <img src="https://images.pexels.com/photos/414612/pexels-photo-414612.jpeg?cs=srgb&dl=pexels-souvenirpixels-414612.jpg&fm=jpg" alt="" style={{ background: "cover" }} />
                         </div>
@@ -64,6 +65,7 @@ function Profile() {
                         </div>
 
                     </div>
+
                     <div className="AllPost">
 
                         <div className="post">

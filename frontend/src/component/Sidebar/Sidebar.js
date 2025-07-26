@@ -9,11 +9,14 @@ function Sidebar() {
     const handleMesssage = () => {
         nevigate("/Message");
     }
+    const handleReel = () => {
+        nevigate("/reel");
+    }
 
 
 
     return <>
-        <div className="sidebar" style={{ height: "585px", marginTop: "40px", marginLeft: "-2px" }}>
+        <div className="sidebar" style={{ height: "585px", marginLeft: "-2px" }}>
             <div className="logo">Social</div>
 
             <button className="sidebar-item active">
@@ -31,7 +34,7 @@ function Sidebar() {
                 Explore
             </button>
 
-            <button className="sidebar-item">
+            <button className="sidebar-item" onClick={handleReel}>
                 <span className="sidebar-item-icon">🎬</span>
                 Reels
             </button>

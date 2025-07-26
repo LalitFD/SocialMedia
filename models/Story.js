@@ -17,7 +17,7 @@ const storySchema = new mongoose.Schema({
         },
         duration: {
             type: Number,
-            default: 15 // seconds
+            default: 15 
         }
     },
     viewers: [{
@@ -34,7 +34,6 @@ const storySchema = new mongoose.Schema({
     timestamps: true
 });
 
-// Index for automatic deletion
 storySchema.index({ expiresAt: 1 }, { expireAfterSeconds: 0 });
 
 export const Story = mongoose.model('Story', storySchema);

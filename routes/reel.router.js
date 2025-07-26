@@ -12,15 +12,11 @@ import {
 import { auth } from "../mideleware/auth.js";
 const upload = multer({ dest: "public/reel" });
 
-auth
-
 const rrouter = express.Router();
 
 rrouter.get("/reels", getAllReels);
 
 rrouter.post("/fetch-pexels", fetchAndSaveReels);
-
-
 
 rrouter.get("/reels/:id", getReelById);
 

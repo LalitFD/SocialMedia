@@ -1,7 +1,6 @@
 import { Story } from "../models/Story.js";
 
 
-// GET all stories 
 export const getAllStories = async (req, res) => {
     try {
         const stories = await Story.find({
@@ -15,7 +14,6 @@ export const getAllStories = async (req, res) => {
     }
 };
 
-// GET story by ID
 export const getStoryById = async (req, res) => {
     try {
         const story = await Story.findById(req.params.id)
@@ -31,7 +29,6 @@ export const getStoryById = async (req, res) => {
     }
 };
 
-// POST new story
 export const createStory = async (req, res) => {
     try {
         const { type, duration } = req.body;
@@ -61,7 +58,6 @@ export const createStory = async (req, res) => {
 };
 
 
-// DELETE story
 export const deleteStory = async (req, res) => {
     try {
         const story = await Story.findById(req.params.id);
@@ -76,7 +72,6 @@ export const deleteStory = async (req, res) => {
     }
 };
 
-// GET stories by user
 export const getStoriesByUser = async (req, res) => {
     try {
         const stories = await Story.find({

@@ -41,7 +41,6 @@ export const fetchAndSaveReels = async (req, res) => {
 };
 
 
-// Get all reels
 export const getAllReels = async (req, res) => {
   try {
     const reels = await Reel.find()
@@ -95,7 +94,6 @@ export const createReel = async (req, res) => {
 };
 
 
-// Delete reel
 export const deleteReel = async (req, res) => {
   try {
     const reel = await Reel.findByIdAndDelete(req.params.id);
@@ -112,7 +110,6 @@ export const deleteReel = async (req, res) => {
 };
 
 
-// Get reels by user
 export const getReelsByUser = async (req, res) => {
   try {
     const reels = await Reel.find({ createdBy: req.params.userId })

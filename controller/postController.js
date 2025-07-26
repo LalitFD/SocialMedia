@@ -1,7 +1,6 @@
 import { Post } from '../models/Post.js';
 import { User } from '../models/User.js';
 
-// GET /api/posts - Get all posts (feed)
 export const getAllMyPosts = async (request, response, next) => {
     try {
         const userId = request.user._id;
@@ -22,7 +21,6 @@ export const getAllMyPosts = async (request, response, next) => {
 };
 
 
-// GET /api/posts/:id - Get single post
 export const getPost = async (request, response, next) => {
     try {
         const { id } = request.params;
@@ -44,7 +42,6 @@ export const getPost = async (request, response, next) => {
     }
 };
 
-// POST /api/posts - Create new post
 export const createPost = async (req, res) => {
     try {
         if (!req.user || !req.user._id) {
@@ -73,7 +70,6 @@ export const createPost = async (req, res) => {
     }
 };
 
-// DELETE /api/posts/:id - Delete post
 export const deletePost = async (request, response, next) => {
     try {
         const { id } = request.params;
@@ -110,7 +106,7 @@ export const deletePost = async (request, response, next) => {
 // };
 
 
-// POST /api/posts/:id/like - Like/Unlike post
+
 export const toggleLike = async (request, response, next) => {
     try {
         const { id } = request.params;
@@ -142,7 +138,6 @@ export const toggleLike = async (request, response, next) => {
     }
 };
 
-// POST /api/posts/:id/comments - Add comment
 export const addComment = async (request, response, next) => {
     try {
         const { id } = request.params;

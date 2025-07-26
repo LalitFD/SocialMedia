@@ -7,15 +7,15 @@ const HomePage = () => {
     const nevigate = useNavigate();
 
     const handleLogin = () => {
-        nevigate("/login");
+        nevigate("/log-in");
     }
 
     const handleSign = () => {
-        nevigate("/signup");
+        nevigate("/sign-up");
     }
 
     const handleDash = () => {
-        nevigate("/dashboard")
+        nevigate("/main")
     }
 
     return (
