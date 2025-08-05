@@ -1,20 +1,21 @@
+import { useNavigate } from "react-router-dom";
 import "./Message.css";
 
 function Message() {
+
+    const nevigate=useNavigate();
     return (
         <>
             <div className="message-container">
                 <div className="sidebar-column">
                     <div className="sidebar-icons">
-                        <button><i class="bi bi-house-heart-fill" ></i></button>
-                        <button><i class="bi bi-search"></i></button>
-                        <button><i class="bi bi-music-note-beamed"></i></button>
-                        <button><i class="bi bi-file-play-fill"></i></button>
-                        <button><i class="bi bi-chat-left"></i></button>
-                        <button><i class="bi bi-bell" style={{ color: "red" }}></i></button>
-                        <button><i class="bi bi-plus-circle"></i></button>
-                        <button><i class="bi bi-three-dots"></i></button>
-                        <button><i class="bi bi-person-circle"></i></button>
+                        <button onClick={()=>nevigate("/Main")}><i class="bi bi-house-heart"></i></button>
+                        {/* <button><i class="bi bi-search"></i></button> */}
+                        {/* <button><i class="bi bi-file-earmark-play"></i></button> */}
+                        {/* <button><i class="bi bi-chat"></i></button> */}
+                        {/* <button><i class="bi bi-bell"></i></button> */}
+                        <button onClick={()=>nevigate("/profile")}><i class="bi bi-person"></i></button>
+                        {/* <button><i class="bi bi-plus-circle"></i></button> */}
                     </div>
                 </div>
 
@@ -51,6 +52,7 @@ function Message() {
                             <div className="chat-avatar"><i class="bi bi-person" style={{ marginLeft: "9px", position: 'relative', top: "6px" }}></i></div>
                             <span>Rohit_Arwal_767</span>
                         </div>
+                        
                     </div>
                 </div>
 

@@ -3,100 +3,157 @@ import img from "./c.jpeg";
 import mahakal from "./m.jpg";
 import "./Main.css";
 import Sidebar from "../Sidebar/Sidebar";
+import End_Points from "../../api/End_Points";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import Story from "../Stories/Story";
 function Main() {
+
+    const userData = JSON.parse(sessionStorage.getItem("Social-User"));
+
+    const nevigate = useNavigate();
+    const [stories, setStories] = useState([]);
+
+    useEffect(() => {
+        const fetchStories = async () => {
+            try {
+                const response = await axios.get(End_Points.GET_STORIES);
+                setStories(response.data);
+            } catch (err) {
+                console.error(err);
+            }
+        };
+        fetchStories();
+    }, []);
+
+
+
+    const [posts, setPosts] = useState([]);
+    console.log("all posts", posts);
+    useEffect(() => {
+        const fetchPosts = async () => {
+            try {
+                const response = await axios.get("http://localhost:3000/api/getAllPost");
+                console.log(response.data.posts.media);
+                console.log(response.data.posts);
+                setPosts(response.data.posts);
+            } catch (error) {
+                console.error("Error fetching posts:", error);
+            }
+        };
+
+        fetchPosts();
+    }, []);
+
+
 
     return <>
         <Sidebar />
         <div className="dashboard-container" style={{ marginLeft: "300px" }}>
             <div className="dashboard-main-content">
                 <div className="dashboard-feed">
+
+
                     <div className="dashboard-story-list">
-                        <div className="dashboard-story-item">
-                            <div className="dashboard-avatar-circle">
-                                <img src={img} alt="Lalit" className="dashboard-story-img" />
+
+
+
+                        <div className="dashboard-story-item" onClick={() => nevigate("/createStory")}>
+
+                            <div style={{ display: "flex", overflowX: "auto", padding: "10px", border: "1px solid white", borderRadius: "50%", height: "70px", width: "70px" }}>
+
+                                <i class="bi bi-plus" style={{ position: "relative", left: "15px", top: "11px", height: "40px" }}></i>
                             </div>
-                            <div className="dashboard-username-label">Lalit@</div>
-                        </div>
-                        <div className="dashboard-story-item">
-                            <div className="dashboard-avatar-circle">
-                                <img src={img} alt="Lalit" className="dashboard-story-img" />
+                            <div className="dashboard-username-label" style={{ position: "relative", top: "7.5px" }}>
+                                Create
                             </div>
-                            <div className="dashboard-username-label">Lalit@</div>
                         </div>
-                        <div className="dashboard-story-item">
-                            <div className="dashboard-avatar-circle">
-                                <img src={img} alt="Lalit" className="dashboard-story-img" />
+
+                        {stories.map((story, index) => (
+                            <div key={index} className="dashboard-story-item"
+                            >
+
+                                <div className="dashboard-avatar-circle">
+                                    <img
+                                        src={story.author.profilePic || img}
+
+                                        className="dashboard-story-img"
+                                    />
+                                </div>
+                                <div className="dashboard-username-label">
+                                    {story.author.name}
+                                </div>
                             </div>
-                            <div className="dashboard-username-label">Lalit@</div>
-                        </div>
-                        <div className="dashboard-story-item">
-                            <div className="dashboard-avatar-circle">
-                                <img src={img} alt="Lalit" className="dashboard-story-img" />
-                            </div>
-                            <div className="dashboard-username-label">Lalit@</div>
-                        </div>
-                        <div className="dashboard-story-item">
-                            <div className="dashboard-avatar-circle">
-                                <img src={img} alt="Lalit" className="dashboard-story-img" />
-                            </div>
-                            <div className="dashboard-username-label">Lalit@</div>
-                        </div>
-                        <div className="dashboard-story-item">
-                            <div className="dashboard-avatar-circle">
-                                <img src={img} alt="Lalit" className="dashboard-story-img" />
-                            </div>
-                            <div className="dashboard-username-label">Lalit@</div>
-                        </div>
+                        ))}
                     </div>
 
-                    <div className="dashboard-post-card">
-                        <div className="dashboard-post-header">
-                            <div className="dashboard-user-info">
-                                <div className="dashboard-user-avatar">
-                                    <img src={img} alt="Lalit" className="dashboard-story-img" />
+                    <div className="dashboard-posts">
+                        {posts.length > 0 ? (
+                            posts.map((post, index) => (
+                                <div key={index} className="dashboard-post-card">
+                                    <div className="dashboard-post-header">
+                                        <div className="dashboard-user-info">
+                                            <div className="dashboard-user-avatar">
+
+                                                <img
+                                                    src={img}
+                                                    alt="User"
+                                                    className="dashboard-story-img"
+                                                />
+                                            </div>
+                                            <div className="dashboard-user-handle">
+                                                {post.author ? post.author.username : "Unknown"}
+                                            </div>
+                                        </div>
+                                        <button className="dashboard-options-button">⋯</button>
+                                    </div>
+
+                                    {/* Post Image */}
+                                    <div className="dashboard-post-media">
+                                        {post.media && post.media.length > 0 ? (
+                                            // <img src={post.media[0].url} alt="Post" />
+
+                                            <img src={mahakal} />
+
+
+                                            // <img src={`http://localhost:3000/public/post/${post.media?.[0]?.url}`} alt="Post" />
+
+
+
+                                        ) : (
+                                            <p>No Image</p>
+                                        )}
+                                    </div>
+
+                                    {/* Like and Comment Icons */}
+                                    <div className="dashboard-post-caption">
+                                        <span className="dashboard-caption-text">
+                                            <i
+                                                className="bi bi-heart fs-5"
+                                                style={{ cursor: "pointer", marginRight: "20px", color: "red" }}
+                                            ></i>
+                                        </span>
+                                        <span className="dashboard-caption-text">
+                                            <i className="bi bi-chat fs-5" style={{ cursor: "pointer" }}></i>
+                                        </span>
+                                    </div>
                                 </div>
-                                <div className="dashboard-user-handle">beinglalit_0007</div>
-                            </div>
-                            <button className="dashboard-options-button">⋯</button>
-                        </div>
-                        <div className="dashboard-post-media">
-                            <img src={mahakal} alt="Post" />
-                        </div>
-                        <div className="dashboard-post-controls">
-                            <button className="dashboard-icon-btn">
-                                <svg className="dashboard-heart-icon" viewBox="0 0 24 24">
-                                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-                                </svg>
-                            </button>
-                            <button className="dashboard-icon-btn">
-                                <svg className="dashboard-comment-icon" viewBox="0 0 24 24">
-                                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-                                </svg>
-                            </button>
-                            <button className="dashboard-icon-btn">
-                                <svg className="dashboard-share-icon" viewBox="0 0 24 24">
-                                    <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
-                                    <polyline points="16,6 12,2 8,6" />
-                                    <line x1="12" y1="2" x2="12" y2="15" />
-                                </svg>
-                            </button>
-                        </div>
-                        <div className="dashboard-post-stats">
-                            <span className="dashboard-likes">524 likes</span>
-                        </div>
-                        <div className="dashboard-post-caption">
-                            <span className="dashboard-username">beinglalit_0007</span>
-                            <span className="dashboard-caption-text">Amazing view! 🌅 #photography #nature</span>
-                        </div>
+                            ))
+                        ) : (
+                            <p>No posts found</p>
+                        )}
                     </div>
                 </div>
 
                 <div className="dashboard-right-sidebar">
+
+
                     <div className="dashboard-profile-section">
                         <div className="dashboard-profile-avatar">
                             <img src={img} alt="Profile" className="dashboard-profile-img" />
                         </div>
-                        <div className="dashboard-profile-name">beinglalit_0007</div>
+                        <div className="dashboard-profile-name">{userData.email}</div>
+
                     </div>
 
                     <div className="dashboard-suggestions-header">
@@ -148,7 +205,7 @@ function Main() {
                         About · Help · Press · API · Jobs · Privacy · Teams · Location · Verified
                     </div>
 
-                    <div className="dashboard-messages-btn">
+                    <div className="dashboard-messages-btn" onClick={() => nevigate("/Message")}>
                         <svg className="dashboard-msg-icon" viewBox="0 0 24 24">
                             <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
                         </svg>
@@ -158,8 +215,161 @@ function Main() {
                 </div>
             </div>
         </div>
+
     </>
 }
 
 
 export default Main;
+
+
+// import { useEffect, useState } from "react";
+// import axios from "axios";
+// import Sidebar from "../Sidebar/Sidebar";
+// import img from "./c.jpeg";
+// import "./Main.css";
+// import End_Points from "../../api/End_Points";
+
+// function Main() {
+//     const [stories, setStories] = useState([]);
+//     const [posts, setPosts] = useState([]);
+
+//     // Fetch Stories
+//     useEffect(() => {
+//         const fetchStories = async () => {
+//             try {
+//                 const response = await axios.get(End_Points.GET_STORIES);
+//                 setStories(response.data);
+//             } catch (err) {
+//                 console.error("Error fetching stories:", err);
+//             }
+//         };
+//         fetchStories();
+//     }, []);
+
+//     // Fetch Posts
+//     useEffect(() => {
+//         const fetchPosts = async () => {
+//             try {
+//                 const response = await axios.get("http://localhost:3000/api/getAllPost");
+//                 setPosts(response.data.posts);
+//             } catch (error) {
+//                 console.error("Error fetching posts:", error);
+//             }
+//         };
+//         fetchPosts();
+//     }, []);
+
+//     return (
+//         <>
+//             <Sidebar />
+//             <div className="dashboard-container" style={{ marginLeft: "300px" }}>
+//                 <div className="dashboard-main-content">
+//                     <div className="dashboard-feed">
+//                         {/* Story List */}
+//                         <div className="dashboard-story-list">
+//                             <div className="dashboard-story-item">
+//                                 <div
+//                                     style={{
+//                                         display: "flex",
+//                                         overflowX: "auto",
+//                                         padding: "10px",
+//                                         border: "1px solid white",
+//                                         borderRadius: "50%",
+//                                         height: "70px",
+//                                         width: "70px"
+//                                     }}
+//                                 >
+//                                     <i
+//                                         className="bi bi-plus"
+//                                         style={{
+//                                             position: "relative",
+//                                             left: "15px",
+//                                             top: "11px",
+//                                             height: "40px"
+//                                         }}
+//                                     ></i>
+//                                 </div>
+//                                 <div
+//                                     className="dashboard-username-label"
+//                                     style={{ position: "relative", top: "7.5px" }}
+//                                 >
+//                                     Create
+//                                 </div>
+//                             </div>
+
+//                             {stories.map((story, index) => (
+//                                 <div key={index} className="dashboard-story-item">
+//                                     <div className="dashboard-avatar-circle">
+//                                         <img
+//                                             src={story.author.profilePic || img}
+//                                             className="dashboard-story-img"
+//                                             alt="story"
+//                                         />
+//                                     </div>
+//                                     <div className="dashboard-username-label">
+//                                         {story.author.name}
+//                                     </div>
+//                                 </div>
+//                             ))}
+//                         </div>
+
+//                         {/* Posts */}
+//                         <div className="dashboard-posts">
+//                             {posts.length > 0 ? (
+//                                 posts.map((post, index) => (
+//                                     <div key={index} className="dashboard-post-card">
+//                                         <div className="dashboard-post-header">
+//                                             <div className="dashboard-user-info">
+//                                                 <div className="dashboard-user-avatar">
+//                                                     {/* Avatar optional */}
+//                                                 </div>
+//                                                 <div className="dashboard-user-handle">
+//                                                     {post.author ? post.author.username : "Unknown"}
+//                                                 </div>
+//                                             </div>
+//                                             <button className="dashboard-options-button">⋯</button>
+//                                         </div>
+
+//                                         {/* Post Image */}
+//                                         <div className="dashboard-post-media">
+//                                             {post.media && post.media.length > 0 ? (
+//                                                 <img src={`http://localhost:3000/public/post/${post.media?.[0]?.url}`} alt="Post" />
+//                                             ) : (
+//                                                 <p>No Image</p>
+//                                             )}
+//                                         </div>
+
+//                                         {/* Like and Comment Icons */}
+//                                         <div className="dashboard-post-caption">
+//                                             <span className="dashboard-caption-text">
+//                                                 <i
+//                                                     className="bi bi-heart fs-5"
+//                                                     style={{
+//                                                         cursor: "pointer",
+//                                                         marginRight: "20px",
+//                                                         color: "red"
+//                                                     }}
+//                                                 ></i>
+//                                             </span>
+//                                             <span className="dashboard-caption-text">
+//                                                 <i
+//                                                     className="bi bi-chat fs-5"
+//                                                     style={{ cursor: "pointer" }}
+//                                                 ></i>
+//                                             </span>
+//                                         </div>
+//                                     </div>
+//                                 ))
+//                             ) : (
+//                                 <p>No posts found</p>
+//                             )}
+//                         </div>
+//                     </div>
+//                 </div>
+//             </div>
+//         </>
+//     );
+// }
+
+// export default Main;

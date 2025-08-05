@@ -8,10 +8,10 @@ function Index() {
     return <>
 
         <HomePage/>
-        <Service/>
+        {/* <Service/>
         <Aboutus/>
         <Contact/>
-        <Footer/>
+        <Footer/> */}
         
     </>
 }

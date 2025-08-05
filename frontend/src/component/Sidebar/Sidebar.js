@@ -1,70 +1,63 @@
-import Message from "../MessagePage/Message";
-import { useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import "./Sidebar.css";
-
+import { useNavigate } from "react-router-dom";
 
 function Sidebar() {
-    const nevigate = useNavigate();
-
-    const handleMesssage = () => {
-        nevigate("/Message");
-    }
-    const handleReel = () => {
-        nevigate("/reel");
-    }
-
-
-
-    return <>
+    const navigate = useNavigate();
+    return (
         <div className="sidebar" style={{ height: "585px", marginLeft: "-2px" }}>
-            <div className="logo">Social</div>
+            <div className="logo" onClick={() => navigate("/Main")} style={{cursor:"pointer"}}>Social</div>
 
-            <button className="sidebar-item active">
-                <span className="sidebar-item-icon">🏠</span>
-                Home
-            </button>
+            <NavLink
+                to="/Main"
+                className={({ isActive }) => isActive ? "sidebar-item active" : "sidebar-item"}
+            >
+                <span className="sidebar-item-icon"><i className="bi bi-house-heart"></i></span>
+                Feed
+            </NavLink>
 
-            <button className="sidebar-item">
-                <span className="sidebar-item-icon">🔍</span>
-                Search
-            </button>
+            <NavLink
+                to="/discover"
+                className={({ isActive }) => isActive ? "sidebar-item active" : "sidebar-item"}
+            >
+                <span className="sidebar-item-icon"><i className="bi bi-search"></i></span>
+                Discover
+            </NavLink>
 
-            <button className="sidebar-item">
-                <span className="sidebar-item-icon">🧭</span>
-                Explore
-            </button>
-
-            <button className="sidebar-item" onClick={handleReel}>
-                <span className="sidebar-item-icon">🎬</span>
-                Reels
-            </button>
-
-            <button className="sidebar-item" onClick={handleMesssage}>
-                <span className="sidebar-item-icon">💬</span>
+            <NavLink
+                to="/Message"
+                className={({ isActive }) => isActive ? "sidebar-item active" : "sidebar-item"}
+            >
+                <span className="sidebar-item-icon"><i className="bi bi-chat"></i></span>
                 Messages
-            </button>
+            </NavLink>
 
-            <button className="sidebar-item">
-                <span className="sidebar-item-icon">🔔</span>
+            <NavLink
+                to="/notifications"
+                className={({ isActive }) => isActive ? "sidebar-item active" : "sidebar-item"}
+            >
+                <span className="sidebar-item-icon"><i className="bi bi-bell"></i></span>
                 Notifications
-            </button>
+            </NavLink>
 
-            <button className="sidebar-item">
-                <span className="sidebar-item-icon">➕</span>
-                Create
-            </button>
-
-            <button className="sidebar-item">
-                <span className="sidebar-item-icon">⋯</span>
-                More
-            </button>
-
-            <button className="sidebar-item">
-                <span className="sidebar-item-icon">👤</span>
+            <NavLink
+                to="/profile"
+                className={({ isActive }) => isActive ? "sidebar-item active" : "sidebar-item"}
+            >
+                <span className="sidebar-item-icon"><i className="bi bi-person"></i></span>
                 Profile
-            </button>
-        </div >
-    </>
+            </NavLink>
+
+            <NavLink
+                to="/CreatePost"
+                className={({ isActive }) => isActive ? "sidebar-item active create-btn" : "sidebar-item create-btn"}
+                style={{ backgroundColor: "white", color: "black", fontWeight: "bold", borderRadius: "5px", marginTop: "20px", width: "90%", marginLeft: "13px" }}
+            >
+                <span className="sidebar-item-icon"><i className="bi bi-plus-circle"></i></span>
+                Create Post
+            </NavLink>
+        </div>
+    );
 }
 
 export default Sidebar;

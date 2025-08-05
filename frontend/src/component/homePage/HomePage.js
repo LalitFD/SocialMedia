@@ -1,6 +1,7 @@
 import React from "react";
 import "./HomePage.css";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { isUserExist } from "../auth/Auth";
 
 
 const HomePage = () => {
@@ -17,19 +18,24 @@ const HomePage = () => {
     const handleDash = () => {
         nevigate("/main")
     }
-
+    const handleLogOut = (event) => {
+        sessionStorage.setItem("Social-User", "");
+        sessionStorage.clear();
+        nevigate("/");
+    }
     return (
         <div className="homepage">
 
             <nav className="navbar">
-                <h2 className="logo">Social<span>.</span></h2>
+                <h2 className="logo" style={{position:"relative", top:"40px"}}>Social<span>.</span></h2>
                 <ul className="nav-links">
                     <li style={{ letterSpacing: "2px" }}>Home</li>
                     <li style={{ letterSpacing: "2px" }}>Services</li>
                     <li style={{ letterSpacing: "2px" }}>About Us</li>
                     <li style={{ letterSpacing: "2px" }}>Contact</li>
                 </ul>
-                <button className="login-btn" onClick={handleLogin}>Login</button>
+                {!isUserExist() && <label className="login-btn" onClick={handleLogin}>Login</label>}
+                {isUserExist() && <label className="login-btn" onClick={handleLogOut}>LogOut</label>}
             </nav>
 
 
@@ -44,7 +50,7 @@ const HomePage = () => {
                         manage your channels with ease.
                     </p>
                     <div className="hero-buttons">
-                        <button className="register" onClick={handleSign}>Register Now</button>
+                        {!isUserExist() && <button className="register" onClick={handleSign}>Register Now</button>}
 
                         <button className="message" onClick={handleDash}><i className="bi bi-chat-left" style={{ color: "black" }}></i> Message</button>
                     </div>

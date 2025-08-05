@@ -1,37 +1,121 @@
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./Sign.css";
-// import loginImage from "./img.png"
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import End_Points from "../../api/End_Points";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Sign() {
-    return <>
-        <div className="login-page">
-            <div className="login-left">
-                <h2 className="logo" style={{ position: "relative", right: "10%", top: "-3%" }}>Social</h2>
-                <p style={{ marginBottom: "200px", position: "relative", right: "5%", top: "-3%" }}>
-                    Connect with the world <span style={{ color: "green" }}>instantly</span> join the ultimate <strong style={{ color: "green" }}>Social Hub.</strong>
-                </p>
+    const nevigate = useNavigate();
 
-                <p className="subtext" style={{ position: "relative", position: "relative", right: "5%", top: "-200px", fontSize: "15px" }}>
-                    Stay updated, share moments and grow your network. <br />
-                    Unlimited access to posts, reels, stories, and more – all in one place.
-                </p>
-            </div>
+    const [state, setState] = useState({
+        name: "",
+        email: "",
+        username: "",
+        password: ""
+    });
 
-            <div className="login-right">
-                <h2 style={{ color: "black" }}>Sign UP</h2>
-                <form>
-                    <input type="text" placeholder="Full Name" />
-                    <input type="email" placeholder="Enter Email" />
-                    <input type="text" placeholder="Username" />
-                    <input type="password" placeholder="Create Password" />
-                    <button type="submit">Sign up</button>
-                </form>
-                <p className="signup-link">
-                    Already have an account?  {" "}  <Link to="/log-in" style={{ color: "green", textDecoration: "none" }}>Log-In</Link>
-                </p>
+    const [isLoading, setIsLoading] = useState(false);
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        try {
+            setIsLoading(true);
+            const response = await axios.post(End_Points.SIGN_UP, state);
+            toast.success(response.data.message);
+            setState({
+                name: "",
+                email: "",
+                username: "",
+                password: ""
+            });
+        } catch (err) {
+            console.error(err);
+            if (err.response && err.response.data && err.response.data.message) {
+                toast.error(err.response.data.message);
+                nevigate("/log-in");
+
+
+            } else {
+                toast.error("Oops! Something went wrong..");
+            }
+
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    return (
+        <>
+            <ToastContainer />
+            <div className="login-page">
+                {/* Left Section */}
+                <div className="login-left">
+                    <h2 className="logo" style={{ position: "relative", right: "10%", top: "-3%" }}>Social</h2>
+                    <p className="main-text" style={{ marginBottom: "200px", position: "relative", right: "5%", top: "-3%" }}>
+                        Connect with the world <span style={{ color: "green" }}>instantly</span> join the ultimate <strong style={{ color: "green" }}>Social Hub.</strong>
+                    </p>
+                    <p className="subtext" style={{ position: "relative", position: "relative", right: "5%", top: "-200px", fontSize: "15px" }}>
+                        Stay updated, share moments and grow your network.
+                        <br />
+                        Unlimited access to posts, reels, stories, and more – all in one place.
+                    </p>
+                </div>
+
+                {/* Right Section */}
+                <div className="login-right">
+                    {isLoading ? (
+                        <div className="loading-text">Loading...</div>
+                    ) : (
+                        <>
+                            <h2 className="form-title">Sign Up</h2>
+                            <form onSubmit={handleSubmit}>
+                                <input
+                                    style={{ borderRadius: "12px", boxShadow: "2px 2px 2px grey" }}
+                                    value={state.name}
+                                    onChange={(e) => setState({ ...state, name: e.target.value })}
+                                    type="text"
+                                    placeholder="Full Name"
+                                    required
+                                />
+                                <input
+                                    style={{ borderRadius: "12px", boxShadow: "2px 2px 2px grey" }}
+                                    value={state.email}
+                                    onChange={(e) => setState({ ...state, email: e.target.value })}
+                                    type="email"
+                                    placeholder="Enter Email"
+                                    required
+                                />
+                                <input
+                                    style={{ borderRadius: "12px", boxShadow: "2px 2px 2px grey" }}
+                                    value={state.username}
+                                    onChange={(e) => setState({ ...state, username: e.target.value })}
+                                    type="text"
+                                    placeholder="Username"
+                                    required
+                                />
+                                <input
+                                    style={{ borderRadius: "12px", boxShadow: "2px 2px 2px grey" }}
+                                    value={state.password}
+                                    onChange={(e) => setState({ ...state, password: e.target.value })}
+                                    type="password"
+                                    placeholder="Create Password"
+                                    required
+                                />
+                                <button type="submit" className="submit-btn">Sign Up</button>
+                            </form>
+                            <p className="signup-link">
+                                Already have an account?{" "}
+                                <Link to="/log-in" className="login-link">Log-In</Link>
+                            </p>
+                        </>
+                    )}
+                </div>
             </div>
-        </div>
-    </>
+        </>
+    );
 }
 
 export default Sign;
