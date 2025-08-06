@@ -19,7 +19,7 @@ function Discover() {
                     <i className="bi bi-search search-icon"></i>
                     <input
                         type="text"
-                        placeholder="Search people by name, username, bio, or location..."
+                        placeholder="Search people by name, username, bio..."
                         className="search-input"
                     />
                     <button className="search-button">Search</button>

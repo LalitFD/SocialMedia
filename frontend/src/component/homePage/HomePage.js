@@ -28,14 +28,16 @@ const HomePage = () => {
 
             <nav className="navbar">
                 <h2 className="logo" style={{position:"relative", top:"40px"}}>Social<span>.</span></h2>
+
                 <ul className="nav-links">
                     <li style={{ letterSpacing: "2px" }}>Home</li>
                     <li style={{ letterSpacing: "2px" }}>Services</li>
                     <li style={{ letterSpacing: "2px" }}>About Us</li>
                     <li style={{ letterSpacing: "2px" }}>Contact</li>
                 </ul>
+                
                 {!isUserExist() && <label className="login-btn" onClick={handleLogin}>Login</label>}
-                {isUserExist() && <label className="login-btn" onClick={handleLogOut}>LogOut</label>}
+                {isUserExist() && <label className="login-btn" onClick={handleLogOut}>Log-out</label>}
             </nav>
 
 
@@ -63,7 +65,7 @@ const HomePage = () => {
                 </div>
 
                 <div className="hero-image">
-                    <img src="/images/p1.png" alt="Graph chart" style={{ width: "90%" }} />
+                    <img src="/images/p1.png" alt="Graph chart" style={{ width: "80%" }} />
                     <div className="social-icons">
                         <i className="bi bi-facebook social-icon icon-facebook"></i>
                         <i className="bi bi-instagram social-icon icon-instagram"></i>

@@ -21,13 +21,13 @@ function Login() {
                 return;
             }
 
-            const response = await axios.post(End_Points.LOG_IN, state);
+            const response = await axios.post(End_Points.LOG_IN, state, { withCredentials: true });
 
             sessionStorage.setItem(
                 "Social-User",
                 JSON.stringify({
                     ...response.data.user,
-                    token: response.data.token 
+                    token: response.data.token
                 })
             );
 
@@ -47,14 +47,26 @@ function Login() {
             <div className="login-page" style={{ background: "linear-gradient(135deg, #5FD13C, #999999)" }}>
                 <div className="login-left">
                     <h2 className="logo" style={{ position: "relative", right: "10%", top: "-3%" }}>Social</h2>
-                    <p style={{ marginBottom: "200px", position: "relative", right: "5%", top: "-3%" }}>
+
+
+                    <p style={{ position: "relative", right: "5%", top: "-3%" }}>
                         Connect with the world <span style={{ color: "green" }}>instantly</span> join the ultimate <strong style={{ color: "green" }}>Social Hub.</strong>
                     </p>
 
-                    <p className="subtext" style={{ position: "relative", right: "5%", top: "-200px", fontSize: "15px" }}>
+                    {/* <p className="subtext" style={{ position: "relative", right: "5%", top: "-200px", fontSize: "15px" }}>
                         Stay updated, share moments and grow your network. <br />
                         Unlimited access to posts, reels, stories, and more – all in one place.
-                    </p>
+                    </p> */}
+
+                    {/* iam adding one beautiful image  */}
+                    
+                    
+                    <img
+                        src="https://i.pinimg.com/736x/57/65/de/5765de283e421d5d07548a897f584e52.jpg"
+                        alt="Login Illustration"
+                        style={{ width: "100%", height: "auto", borderRadius: "20px", boxShadow: "0 4px 8px rgba(0,0,0,0.1)", position: "relative", top: "-25px" }}
+                    />
+
                 </div>
 
                 <div className="login-right">

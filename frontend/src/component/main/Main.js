@@ -34,8 +34,7 @@ function Main() {
         const fetchPosts = async () => {
             try {
                 const response = await axios.get("http://localhost:3000/api/getAllPost");
-                console.log(response.data.posts.media);
-                console.log(response.data.posts);
+                console.log("API response:", response.data);
                 setPosts(response.data.posts);
             } catch (error) {
                 console.error("Error fetching posts:", error);
@@ -55,8 +54,6 @@ function Main() {
 
 
                     <div className="dashboard-story-list">
-
-
 
                         <div className="dashboard-story-item" onClick={() => nevigate("/createStory")}>
 
@@ -111,15 +108,7 @@ function Main() {
                                     {/* Post Image */}
                                     <div className="dashboard-post-media">
                                         {post.media && post.media.length > 0 ? (
-                                            // <img src={post.media[0].url} alt="Post" />
-
-                                            <img src={mahakal} />
-
-
-                                            // <img src={`http://localhost:3000/public/post/${post.media?.[0]?.url}`} alt="Post" />
-
-
-
+                                            <img src={post.media?.[0]?.url} alt="Post" />
                                         ) : (
                                             <p>No Image</p>
                                         )}
@@ -135,6 +124,9 @@ function Main() {
                                         </span>
                                         <span className="dashboard-caption-text">
                                             <i className="bi bi-chat fs-5" style={{ cursor: "pointer" }}></i>
+                                        </span>
+                                        <span className="dashboard-caption-text" style={{ marginLeft: "20px" }}>
+                                            {post.caption ? post.caption : "No caption"}
                                         </span>
                                     </div>
                                 </div>
@@ -213,6 +205,7 @@ function Main() {
                         <div className="dashboard-settings-icon">⚙️</div>
                     </div>
                 </div>
+
             </div>
         </div>
 
@@ -221,155 +214,3 @@ function Main() {
 
 
 export default Main;
-
-
-// import { useEffect, useState } from "react";
-// import axios from "axios";
-// import Sidebar from "../Sidebar/Sidebar";
-// import img from "./c.jpeg";
-// import "./Main.css";
-// import End_Points from "../../api/End_Points";
-
-// function Main() {
-//     const [stories, setStories] = useState([]);
-//     const [posts, setPosts] = useState([]);
-
-//     // Fetch Stories
-//     useEffect(() => {
-//         const fetchStories = async () => {
-//             try {
-//                 const response = await axios.get(End_Points.GET_STORIES);
-//                 setStories(response.data);
-//             } catch (err) {
-//                 console.error("Error fetching stories:", err);
-//             }
-//         };
-//         fetchStories();
-//     }, []);
-
-//     // Fetch Posts
-//     useEffect(() => {
-//         const fetchPosts = async () => {
-//             try {
-//                 const response = await axios.get("http://localhost:3000/api/getAllPost");
-//                 setPosts(response.data.posts);
-//             } catch (error) {
-//                 console.error("Error fetching posts:", error);
-//             }
-//         };
-//         fetchPosts();
-//     }, []);
-
-//     return (
-//         <>
-//             <Sidebar />
-//             <div className="dashboard-container" style={{ marginLeft: "300px" }}>
-//                 <div className="dashboard-main-content">
-//                     <div className="dashboard-feed">
-//                         {/* Story List */}
-//                         <div className="dashboard-story-list">
-//                             <div className="dashboard-story-item">
-//                                 <div
-//                                     style={{
-//                                         display: "flex",
-//                                         overflowX: "auto",
-//                                         padding: "10px",
-//                                         border: "1px solid white",
-//                                         borderRadius: "50%",
-//                                         height: "70px",
-//                                         width: "70px"
-//                                     }}
-//                                 >
-//                                     <i
-//                                         className="bi bi-plus"
-//                                         style={{
-//                                             position: "relative",
-//                                             left: "15px",
-//                                             top: "11px",
-//                                             height: "40px"
-//                                         }}
-//                                     ></i>
-//                                 </div>
-//                                 <div
-//                                     className="dashboard-username-label"
-//                                     style={{ position: "relative", top: "7.5px" }}
-//                                 >
-//                                     Create
-//                                 </div>
-//                             </div>
-
-//                             {stories.map((story, index) => (
-//                                 <div key={index} className="dashboard-story-item">
-//                                     <div className="dashboard-avatar-circle">
-//                                         <img
-//                                             src={story.author.profilePic || img}
-//                                             className="dashboard-story-img"
-//                                             alt="story"
-//                                         />
-//                                     </div>
-//                                     <div className="dashboard-username-label">
-//                                         {story.author.name}
-//                                     </div>
-//                                 </div>
-//                             ))}
-//                         </div>
-
-//                         {/* Posts */}
-//                         <div className="dashboard-posts">
-//                             {posts.length > 0 ? (
-//                                 posts.map((post, index) => (
-//                                     <div key={index} className="dashboard-post-card">
-//                                         <div className="dashboard-post-header">
-//                                             <div className="dashboard-user-info">
-//                                                 <div className="dashboard-user-avatar">
-//                                                     {/* Avatar optional */}
-//                                                 </div>
-//                                                 <div className="dashboard-user-handle">
-//                                                     {post.author ? post.author.username : "Unknown"}
-//                                                 </div>
-//                                             </div>
-//                                             <button className="dashboard-options-button">⋯</button>
-//                                         </div>
-
-//                                         {/* Post Image */}
-//                                         <div className="dashboard-post-media">
-//                                             {post.media && post.media.length > 0 ? (
-//                                                 <img src={`http://localhost:3000/public/post/${post.media?.[0]?.url}`} alt="Post" />
-//                                             ) : (
-//                                                 <p>No Image</p>
-//                                             )}
-//                                         </div>
-
-//                                         {/* Like and Comment Icons */}
-//                                         <div className="dashboard-post-caption">
-//                                             <span className="dashboard-caption-text">
-//                                                 <i
-//                                                     className="bi bi-heart fs-5"
-//                                                     style={{
-//                                                         cursor: "pointer",
-//                                                         marginRight: "20px",
-//                                                         color: "red"
-//                                                     }}
-//                                                 ></i>
-//                                             </span>
-//                                             <span className="dashboard-caption-text">
-//                                                 <i
-//                                                     className="bi bi-chat fs-5"
-//                                                     style={{ cursor: "pointer" }}
-//                                                 ></i>
-//                                             </span>
-//                                         </div>
-//                                     </div>
-//                                 ))
-//                             ) : (
-//                                 <p>No posts found</p>
-//                             )}
-//                         </div>
-//                     </div>
-//                 </div>
-//             </div>
-//         </>
-//     );
-// }
-
-// export default Main;
