@@ -13,7 +13,7 @@ import cors from "cors";
 const app = express();
 
 mongoose.connect(process.env.URL).then((result) => {
-    app.use(express.static("public"))
+    app.use('/public', express.static('public'));
     app.use(bodyParser.json())
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));

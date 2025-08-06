@@ -60,10 +60,10 @@ export const login = async (request, response, next) => {
 
             response.cookie("token", token, {
                 httpOnly: true,
-                secure: false,
-                SameSite: 'Lax',
-                maxAge: 24 * 60 * 60 * 1000
-            })
+                secure: false, // local development pe false
+                sameSite: "lax" // cross-origin ke 
+            });
+
             return response.status(200).json({ message: "Login success", token, user })
         }
 
